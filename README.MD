@@ -118,3 +118,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 
 [MIT License](LICENSE)
+
+---
+For customizations or integration support, feel free to reach out to the [Code the Gap](https://www.codethegap.com/) team.
