@@ -188,12 +188,14 @@
         "type": "object",
         "properties": {
           "name": {
+            "description": "Human-friendly name of the product option.",
             "type": "string"
           },
           "active": {
             "type": ["boolean", "null"]
           },
           "price": {
+            "description": "Extra price for the product option, added to the product's price/sale_price. If the option is part of a variant, the variant's price/sale_price will override this value.",
             "type": ["number", "null"]
           },
           "description": {
@@ -204,13 +206,15 @@
             "description": "Indicates the option is an aspect of variants. If set, variants will be generated automatically."
           },
           "subscription": {
+            "description": "Indicates whether the option specifies the billing interval of a subscription plan.",
             "type": ["boolean", "null"]
           },
           "required": {
             "type": ["boolean", "null"],
-            "description": "Indicates the option requires a value"
+            "description": "Indicates whether the option requires a value when the product is added to a cart."
           },
           "attribute_id": {
+            "description": "Attribute id which specifies option possible values.",
             "type": ["string", "null"]
           },
           "values": {
@@ -220,15 +224,19 @@
               "type": "object",
               "properties": {
                 "name": {
+                  "description": "Human-friendly name of the product option value.",
                   "type": "string"
                 },
                 "price": {
+                  "description": "Extra price added to the product's price/sale_price if the option value is selected. Overrides option price.",
                   "type": ["number", "null"]
                 },
                 "color": {
+                  "description": "Name of the product color, if applicable.",
                   "type": ["string", "null"]
                 },
                 "description": {
+                  "description": "A brief description of the option value, intended for displaying to customers.",
                   "type": ["string", "null"]
                 },
                 "images": {
@@ -236,7 +244,7 @@
                 },
                 "shipment_weight": {
                   "type": ["number", "null"],
-                  "description": "Shipment weight added if the option value is selected"
+                  "description": "Shipment weight added if the option value is selected, if applicable."
                 }
               },
               "required": ["name"]
@@ -246,13 +254,16 @@
             "type": ["array", "null"]
           },
           "input_type": {
+            "description": "Type of user input to display for this option in a storefront. Can be text, textarea, select, multi_select, file, or multi_file. select is ideal for dropdown or radio selectors, and multi_select is ideal for checkboxes. A maximum of 10 files can be uploaded by the user, and there are no restrictions on file type.",
             "type": ["string", "null"],
             "enum": ["select", "toggle", "short_text", "long_text", null]
           },
           "input_multi": {
+            "description": "Indicates there are multiple selections for options.",
             "type": ["boolean", "null"]
           },
           "input_hint": {
+            "description": "Some brief hint text to help the user understand this product option.",
             "type": ["string", "null"]
           }
         },

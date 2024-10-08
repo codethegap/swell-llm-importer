@@ -26,8 +26,9 @@ variants.purchase_options.subscription: false
 variants.purchase_options.standard.prices: false
 variants.purchase_options.standard.account_groups: false
 
-options.values.images: false
+options.values.images: true
 options.parent_value_ids: false
+options.attribute_id: false
 
 bundle_items: false
 
