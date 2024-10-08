@@ -1,8 +1,8 @@
 ---
-# Disable fields and all nested (branch)
-# Use dot notation for the full field name
-# Set true or remove from the list to enable the field (or branch of fields). Set false to disable
-# Note: The script disables fields after assembling the full schema from $ref-$def components. If you need to disable a section declared in $def, you must explicitly disable it at every $ref injection.
+# Disable fields and nested branches
+# Use dot notation to specify the full field name.
+# Set the value to true or remove the field from the list to enable it (or its nested fields). Set the value to false to disable the field or branch.
+# Note: Fields are disabled after the full schema is assembled from $ref and $def components. If you need to disable a section declared within $def, you must explicitly disable it at every $ref injection point.
 
 slug: false
 code: false
@@ -59,7 +59,7 @@ category_index.id:
   "Clothes": "6703e2ef19d0f70012b5396f"
   "Makeup": "670544cb62d72c001213257b"
 
-# List of categories, available for selection
-# You can assign any LLM-friendly name to the category in the section below. You don’t have to use the exact category name as it is stored in Swell.
-# However, it is important to provide the actual category identifiers from your Swell store if you want this category to be considered during import.
-# Comment out the category_index section below and add category_index: false if you want to disable the category selector.
+# List of Categories Available for Selection
+# You can assign any LLM-friendly name to the categories in the section above. There’s no need to use the exact category name stored in Swell.
+# However, it’s essential to include the actual category identifiers from your Swell store if you want the category to be considered during import.
+# If you wish to disable the category selector, simply comment out the category_index section below and set category_index: false.
