@@ -1,4 +1,4 @@
-# Swell LLM Importer
+# Swell 4o-structured importer
 
 Swell LLM Importer is a Python project designed to convert unstructured product information into structured JSON for importing into the Swell eCommerce platform and using 4o structured output.
 
