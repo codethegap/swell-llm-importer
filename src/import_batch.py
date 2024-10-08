@@ -12,6 +12,7 @@ import time
 # Import the modules
 import preprocess_source
 import generate_product
+import build_schema
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
 
@@ -120,6 +121,12 @@ def main():
     data_dir = os.path.join(DATA_DIR, f'batch_{unique_id}')
     #data_dir = f'./data/batch_{unique_id}'
     os.makedirs(data_dir, exist_ok=True)
+
+    # Call build_schema.main()
+    try:
+        build_schema.main()
+    except Exception as e:
+        print(f'Error in build_schema: {e}')
 
     # Process each product
     success_count = 0
