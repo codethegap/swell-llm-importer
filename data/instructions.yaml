@@ -1,0 +1,64 @@
+---
+# Disable fields and all nested (branch)
+# Use dot notation for the full field name
+# Set true or remove from the list to enable the field (or branch of fields). Set false to disable
+# Note: The script disables fields after assembling the full schema from $ref-$def components. If you need to disable a section declared in $def, you must explicitly disable it at every $ref injection.
+
+slug: false
+code: false
+demo: false
+delivery: false
+discontinued: false
+
+cost: false
+variants.cost: false
+
+variants.images: false
+
+purchase_options.trial: false
+variants.purchase_options.trial: false
+
+purchase_options.standard.prices: false
+purchase_options.standard.account_groups: false
+
+purchase_options.subscription: false
+variants.purchase_options.subscription: false
+variants.purchase_options.standard.prices: false
+variants.purchase_options.standard.account_groups: false
+
+options.values.images: false
+options.parent_value_ids: false
+
+bundle_items: false
+
+shipment_location: false
+shipment_weight: false
+variants.shipment_weight: false
+
+shipment_package_quantity: false
+shipment_dimensions: false
+
+tax_class: true
+tax_code: true
+
+quantity_inc: false
+quantity_min: false
+customizable: false
+review_rating: false
+
+
+attributes: true
+variants.attributes: false
+
+variants: false
+
+category_index.id:
+  "Books > all": "66016aff5b32e200126b70bc"
+  "Fruits > all": "65f986ebc39e1b00120dbf44"
+  "Clothes": "6703e2ef19d0f70012b5396f"
+  "Makeup": "670544cb62d72c001213257b"
+
+# List of categories, available for selection
+# You can assign any LLM-friendly name to the category in the section below. You don’t have to use the exact category name as it is stored in Swell.
+# However, it is important to provide the actual category identifiers from your Swell store if you want this category to be considered during import.
+# Comment out the category_index section below and add category_index: false if you want to disable the category selector.

@@ -1,0 +1,11 @@
+pydantic>=1.8,<2
+pyyaml
+jsonschema
+jsonref
+argparse
+openai
+PyPDF2
+requests
+beautifulsoup4
+python-dotenv
+tiktoken

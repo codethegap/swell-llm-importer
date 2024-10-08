@@ -1,0 +1,628 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Human-friendly name of the product."
+    },
+    "slug": {
+      "type": "string",
+      "description": "Lowercase, hyphenated identifier typically used in URLs. When creating a product, a `slug `will be generated automatically from the `name`. Maximum length of 1,000 characters."
+    },
+    "type": {
+      "type": ["string", "null"],
+      "description": "Implies the ordering and fulfillment options available for the product. Can be `standard`, `subscription`, `bundle`, or `giftcard`. A `standard` product is a physical item that will be shipped to a customer."
+    },
+    "sku": {
+      "type": ["string", "null"],
+      "description": "Stock keeping unit (SKU) used to track inventory in a warehouse."
+    },
+    "code": {
+      "type": ["string", "null"],
+      "description": "Unique code to identify the gift card product."
+    },
+    "active": {
+      "type": ["boolean", "null"],
+      "description": "Indicates whether the product is active and available in the storefront."
+    },
+    "demo": {
+      "type": ["boolean", "null"],
+      "description": "Indicates whether the product is a demo."
+    },
+    "discontinued": {
+      "type": ["boolean", "null"],
+      "description": "Indicates whether the product has been discontinued."
+    },
+    "tags": {
+      "type": ["array", "null"],
+      "description": "Array of searchable tags to aid in search discoverability.",
+      "items": {
+        "type": ["string"]
+      }
+    },
+    "category_index": {
+      "type": "object",
+      "description": "List of categories associated with the product.",
+      "properties": {
+        "id": {
+          "type": ["array", "null"],
+          "description": "List of category IDs",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "cost": {
+      "type": ["number", "null"],
+      "description": "Cost of goods (COGS) used to calculate gross margins."
+    },
+    "tax_class": {
+      "type": ["string", "null"],
+      "description": "Indicates the tax class for the product."
+    },
+    "tax_code": {
+      "type": ["string", "null"],
+      "description": "Product tax code for tracking with Avalara, TaxJar, etc."
+    },
+    "summary": {
+      "type": ["string", "null"],
+      "description": "A brief product summary."
+    },
+    "description": {
+      "type": ["string", "null"],
+      "description": "A long-form description of the product. May contain HTML or other markup languages."
+    },
+    "meta_title": {
+      "type": ["string", "null"],
+      "description": "Page title used to override product name in storefronts."
+    },
+    "meta_keywords": {
+      "type": ["string", "null"],
+      "description": "Page keywords used for search engine optimization purposes."
+    },
+    "meta_description": {
+      "type": ["string", "null"],
+      "description": "Page description used for search engine optimization purposes."
+    },
+    "virtual": {
+      "type": ["boolean", "null"],
+      "description": "Indicates whether the product is virtual."
+    },
+    "delivery": {
+      "type": ["string", "null"],
+      "description": "Method of fulfillment automatically assigned based on type: `shipment` means the product will be physically shipped to a customer. `subscription` means the product will be fulfilled as a subscription when an order is placed. `giftcard` delivery means the product will be fulfilled as a gift card when an order is placed. `null` means the product will not be fulfilled by one of the above methods. _Note: A bundle has its child products fulfilled individually; each product in the bundle must have its own fulfillment method._",
+      "enum": ["shipment", "subscription", "giftcard", null]
+    },
+    "shipment_location": {
+      "type": ["string", "null"],
+      "description": "ID of location from `/settings/shipping/locations`. If specified, shipping is calculated from this location. Otherwise, the store's default location will be used."
+    },
+    "shipment_weight": {
+      "type": ["number", "null"],
+      "description": "If specified, shipping is calculated using this weight. Otherwise, Swell assumes 1 lb/oz/kg depending on the store's default weight unit."
+    },
+    "shipment_package_quantity": {
+      "type": ["number", "null"],
+      "description": "If specified, shipping is calculated using this as the maximum number of items per package. Otherwise, Swell assumes any quantity fits into a single package."
+    },
+    "shipment_dimensions": {
+      "type": "object",
+      "description": "Product dimensions when packed for shipping. Typically used by third-party carriers in box packing algorithms to optimize shipping costs.",
+      "properties": {
+        "length": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number"
+        },
+        "height": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "description": "Unit of measure: Inches (in) or Centimeters (cm)",
+          "enum": ["in", "cm"]
+        }
+      },
+      "required": ["length", "width", "height", "unit"]
+    },
+    "variants": {
+      "type": ["array", "null"],
+      "description": "An array of variants represents unique variations of a product, with each variant being a combination of one or more options, such as Size and Color. Variants can be initialized without declaring options. Alternatively, you can let the platform automatically generate variants by setting the options.variant = true flag (in this case, set the variants array to null). It is not possible to initialize both options and variants within the same JSON object, as variants depend on the option identifier assigned by the platform. You must choose either the options + auto-generate variants approach or the variants-only approach.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "sku": {
+            "description": "Set if variant has separate SKU",
+            "type": ["string", "null"]
+          },
+          "code": {
+            "type": ["string", "null"],
+            "description": "Product barcode, UPC, EAN, or ISBN. If not set, the parent product value is used."
+          },
+          "active": {
+            "type": ["boolean", "null"]
+          },
+          "cost": {
+            "description": "Cost of goods (COGS) used to calculate gross margins. If not set, the parent product value is used.",
+            "type": ["number", "null"]
+          },
+          "shipment_weight": {
+            "description": "If specified, shipping is calculated based on this weight. Otherwise, the parent product value is used.",
+            "type": ["number", "null"]
+          },
+          "images": {
+            "$ref": "#/$defs/images"
+          },
+          "purchase_options": {
+            "type": "object",
+            "description": "If not set, the parent product value is used.",
+            "properties": {
+              "standard": {
+                "$ref": "#/$defs/standard_purchase_option"
+              }
+            }
+          },
+          "attributes": {
+            "$ref": "#/$defs/attributes"
+          },
+          "archived": {
+            "type": ["boolean", "null"]
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    "attributes": {
+      "$ref": "#/$defs/attributes"
+    },
+    "options": {
+      "type": ["array", "null"],
+      "description": "Options that allow for variations of the base product. If the option is part of a variant or `required=true`, an option value must be set for the product to be added to a cart.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "active": {
+            "type": ["boolean", "null"]
+          },
+          "price": {
+            "type": ["number", "null"]
+          },
+          "description": {
+            "type": ["string", "null"]
+          },
+          "variant": {
+            "type": ["boolean", "null"],
+            "description": "Indicates the option is an aspect of variants. If set, variants will be generated automatically."
+          },
+          "subscription": {
+            "type": ["boolean", "null"]
+          },
+          "required": {
+            "type": ["boolean", "null"],
+            "description": "Indicates the option requires a value"
+          },
+          "attribute_id": {
+            "type": ["string", "null"]
+          },
+          "values": {
+            "type": ["array", "null"],
+            "description": "List of values for this option",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": ["number", "null"]
+                },
+                "color": {
+                  "type": ["string", "null"]
+                },
+                "description": {
+                  "type": ["string", "null"]
+                },
+                "images": {
+                  "$ref": "#/$defs/images"
+                },
+                "shipment_weight": {
+                  "type": ["number", "null"],
+                  "description": "Shipment weight added if the option value is selected"
+                }
+              },
+              "required": ["name"]
+            }
+          },
+          "parent_value_ids": {
+            "type": ["array", "null"]
+          },
+          "input_type": {
+            "type": ["string", "null"],
+            "enum": ["select", "toggle", "short_text", "long_text", null]
+          },
+          "input_multi": {
+            "type": ["boolean", "null"]
+          },
+          "input_hint": {
+            "type": ["string", "null"]
+          }
+        },
+        "required": ["name"]
+      }
+    },
+    "purchase_options": {
+      "$ref": "#/$defs/purchase_options"
+    },
+    "bundle": {
+      "type": ["boolean", "null"],
+      "description": "Indicates whether the product is a bundle of other products."
+    },
+    "bundle_items": {
+      "type": "object",
+      "description": "List of products sold as a bundle. Applicable only when `bundle=true`.",
+      "properties": {
+        "quantity": {
+          "type": ["integer", "null"]
+        },
+        "product_name": {
+          "type": ["string", "null"]
+        }
+      },
+      "items": {
+        "type": ["object", "null"]
+      }
+    },
+    "images": {
+      "$ref": "#/$defs/images"
+    },
+    "stock": {
+      "type": ["array", "null"],
+      "description": "List of stock adjustments for the product.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": ["string", "null"],
+            "enum": [
+              "received",
+              "returned",
+              "canceled",
+              "sold",
+              "missing",
+              "damaged",
+              null
+            ]
+          },
+          "reason_message": {
+            "type": ["string", "null"]
+          },
+          "description": {
+            "type": ["string", "null"]
+          },          
+          "quantity": {
+            "type": "integer",
+            "description": "Adjustment quantity (relative)"
+          },
+          "location": {
+            "type": ["string", "null"]
+          }
+        }
+      }
+    },
+    "quantity_min": {
+      "type": ["integer", "null"],
+      "description": "Minimum quantity of the product that can be sold at once."
+    },
+    "quantity_inc": {
+      "type": ["integer", "null"],
+      "description": "Specifies a quantify multiple the product must be sold in."
+    },
+    "variable": {
+      "type": ["boolean", "null"],
+      "description": "Indicates whether the product has variant generation enabled."
+    },
+    "customizable": {
+      "type": ["boolean", "null"],
+      "description": "Indicates whether the product has custom options enabled."
+    },
+    "stock_tracking": {
+      "type": ["boolean", "null"],
+      "description": "Indicates whether the product has stock tracking enabled."
+    },
+    "stock_preorder": {
+      "type": ["boolean", "null"],
+      "description": "Indicates whether the product can be purchased as a preorder."
+    },
+    "stock_backorder": {
+      "type": ["boolean", "null"],
+      "description": "Indicates whether the product can be backordered if out of stock."
+    },
+    "stock_purchasable": {
+      "type": ["boolean", "null"],
+      "description": "Indicates whether the product's stock is purchasable."
+    },
+    "review_rating": {
+      "type": ["number", "null"],
+      "description": "Average rating from all product reviews."
+    },
+    "reviews": {
+      "type": ["array", "null"],
+      "description": "A list of product reviews.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "approved": {
+            "type": ["boolean", "null"]
+          },
+          "rating": {
+            "type": "integer",
+            "enum": [1, 2, 3, 4, 5]
+          },
+          "name": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "comments": {
+            "type": "string"
+          }
+        },
+        "required": ["rating", "name", "title", "comments"]
+      }
+    },
+    "currency": {
+      "type": ["string", "null"]
+    }
+  },
+  "$defs": {
+    "attributes": {
+      "type": "object",
+      "description": "Collection of product or product variant attributes. Key-value pairs.",
+      "properties": {
+        "generated": {
+          "type": "boolean",
+          "description": "A flag indicating that the product has been generated by a large language model. This should always be set to true."
+        }
+      },
+      "required": ["generated"]
+    },
+    "images": {
+      "type": "array",
+      "description": "List of images depicting parental object (product, variant, bundle etc).",
+      "properties": {
+        "caption": {
+          "type": ["string", "null"]
+        },
+        "file": {
+          "type": "object",
+          "properties": {
+            "content_type": {
+              "type": ["string", "null"],
+              "description": "MIME content type of the product image file."
+            },
+            "url": {
+              "type": ["string", "null"],
+              "description": "A public URL to reference the product image file."
+            }
+          }
+        }
+      },
+      "items": {
+        "type": ["object", "null"]
+      }
+    },
+    "purchase_options": {
+      "type": "object",
+      "description": "Configuration of one or more purchase options for the product. Can be `standard` for one-time purchases or `subscription` for a subscription plan. Products can support both purchase options simultaneously.",
+      "properties": {
+        "standard": {
+          "$ref": "#/$defs/standard_purchase_option"
+        },
+        "subscription": {
+          "$ref": "#/$defs/subscription_purchase_option"
+        },
+        "trial": {
+          "$ref": "#/$defs/trial_purchase_option"
+        }
+      }
+    },
+    "standard_purchase_option": {
+      "type": "object",
+      "description": "Designates product or variant purchase option as a one-time purchase.",
+      "properties": {
+        "name": {
+          "type": ["string", "null"]
+        },
+        "description": {
+          "type": ["string", "null"],
+          "description": "A long-form description of the product purchase option."
+        },
+        "active": {
+          "type": ["boolean", "null"]
+        },
+        "price": {
+          "type": ["number", "null"],
+          "description": "Default product or variant list price. Used when sale=false."
+        },
+        "sale": {
+          "type": ["boolean", "null"],
+          "description": "Indicates whether the product or variant is on sale. If true, the sale_price will be used by default when the product is added to a cart for one time purchase."
+        },
+        "sale_price": {
+          "type": ["number", "null"],
+          "description": "Product sale price used by default when sale=true, overriding price."
+        },
+        "prices": {
+          "type": "array",
+          "description": "Product price rules determined by cart quantity or customer account group. Overrides price and sale_price when conditions match.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "price": {
+                "type": "number",
+                "description": "Price applied when quantity and-or customer group conditions are met."
+              },
+              "discount_percent": {
+                "type": ["number", "null"],
+                "description": "Alternatively to price, you can specify discount percent."
+              },
+              "quantity_min": {
+                "type": ["integer", "null"],
+                "description": "Minimum quantity as a condition to apply product price rule. Default value is null."
+              },
+              "quantity_max": {
+                "type": ["integer", "null"],
+                "description": "Maximum quantity as a condition to apply product price rule. Default value is null."
+              },
+              "account_group": {
+                "type": ["string", "null"],
+                "description": "Customer account group condition to apply product price rule. Equal to null if macthes with any group."
+              }
+            },
+            "required": ["price"]
+          }
+        },
+        "account_groups": {
+          "type": ["array", "null"],
+          "description": "Array of account groups that are eligible to access the purchase option within the storefront. Array of string values from accounts group field. Default value is null."
+        }
+      }
+    },
+    "subscription_purchase_option": {
+      "type": "object",
+      "description": "Designates product purchase option for a subscription plan which can be used to create a subscription. Subscription purchase option plan explains available subscription options and terms and never specifies concrete subscription of the particular customer.",
+      "properties": {
+        "name": {
+          "type": ["string", "null"],
+          "description": "Name of the product subscription plan purchase option."
+        },
+        "description": {
+          "type": ["string", "null"],
+          "description": "A long-form description of the product subscription purchase option."
+        },
+        "active": {
+          "type": ["boolean", "null"],
+          "description": "Indicates whether the product purchase option is available for customers to subscribe. Inactive option will not be visible at the Frontend."
+        },
+        "account_groups": {
+          "type": ["array", "null"],
+          "description": "Array of account_group names for which the purchase option is available."
+        },
+        "plans": {
+          "type": "array",
+          "description": "Array defining product subscription plans and their respective configurations, including price rule. Chosen plan will form the billing_schedule for the subscription.",
+          "items": {
+            "type": ["object", "null"],
+            "properties": {
+              "name": {
+                "type": ["string", "null"],
+                "description": "Name of the product subscription plan."
+              },
+              "description": {
+                "type": ["string", "null"],
+                "description": "A long-form description of the product subscription plan."
+              },
+              "active": {
+                "type": ["boolean", "null"],
+                "description": "Indicates whether the product subscription plan is available (active) to subscribe."
+              },
+              "price": {
+                "type": ["number", "null"],
+                "description": "List price for the product subscription plan."
+              },
+              "billing_schedule": {
+                "type": "object",
+                "description": "Determines the billing schedule (period) for the product subscription plan. If 'order_schedule' field is not defined, this schedule also determines the order cycle.",
+                "properties": {
+                  "interval": {
+                    "type": ["string", "null"],
+                    "enum": ["monthly", "daily", "weekly", "yearly", null],
+                    "description": "Specifies the billing cycle interval for the product subscription plan, with options `daily`, `weekly`, `monthly`, or `yearly`. Refer to the interval_count field for setting the interval multiplier."
+                  },
+                  "interval_count": {
+                    "type": ["integer", "null"],
+                    "description": "Acts as an integer multiplier for the billing cycle interval of the product subscription plan. For instance, to establish a bi-weekly billing cycle, set interval to `weekly` and interval_count to 2."
+                  },
+                  "trial_days": {
+                    "type": ["integer", "null"],
+                    "description": "Number of days offered as a free trial on the product subscription plan before the customer is billed. If a subscription is canceled by the last day of the trial period, an invoice won't be issued."
+                  },
+                  "limit": {
+                    "type": ["integer", "null"],
+                    "description": "Specifies a limit to the number of billing cycles for the product subscription plan. For example, limit=10 would stop billing the customer after the tenth billing cycle."
+                  }
+                }
+              },
+              "order_schedule": {
+                "type": "object",
+                "description": "Sets the order schedule (period) for the product subscription plan, which can differ from the billing schedule. Typically, this field is not set, implying that the order cycle aligns with the billing cycle.",
+                "properties": {
+                  "interval": {
+                    "type": ["string", "null"],
+                    "enum": ["monthly", "daily", "weekly", "yearly", null],
+                    "description": "Specifies the order cycle interval for the product subscription plan, with options `daily`, `weekly`, `monthly`, or `yearly`. Refer to the interval_count field for setting the interval multiplier."
+                  },
+                  "interval_count": {
+                    "type": ["integer", "null"],
+                    "description": "Acts as an integer multiplier for the order cycle interval of the product subscription plan. For instance, to establish a bi-weekly order cycle, set interval to `weekly` and interval_count to 2."
+                  },
+                  "limit": {
+                    "type": ["integer", "null"],
+                    "description": "Specifies a limit to the number of order cycles for the product subscription plan. For example, limit=10 would stop ordering for the customer after the tenth order cycle."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "trial_purchase_option": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": ["boolean", "null"]
+        },
+        "price": {
+          "type": "number"
+        },
+        "auth_amount": {
+          "type": ["number", "null"]
+        },
+        "trial_days": {
+          "type": "integer"
+        },
+        "prices": {
+          "type": "object",
+          "properties": {
+            "price": {
+              "type": "number"
+            },
+            "auth_amount": {
+              "type": ["number", "null"]
+            },
+            "trial_days": {
+              "type": "integer"
+            },
+            "account_group": {
+              "type": "string"
+            }
+          },
+          "required": ["price", "trial_days", "account_group"]
+        }
+      },
+      "required": ["price", "trial_days"]
+    }
+  },
+  "required": ["name", "slug"]
+}

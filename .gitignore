@@ -1,0 +1,32 @@
+# Ignore all files in data directory
+data/*
+
+
+# But don't ignore these specific files
+!data/instructions.yaml
+!data/schema.json
+!data/.gitkeep
+!data/examples
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Python-related files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.env
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
