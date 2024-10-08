@@ -20,7 +20,7 @@ Swell LLM Importer is a Python project designed to convert unstructured product 
 
 3. Run the batch import:
    ```
-   import_batch --batch-file examples/shopify_samples.csv --batch-type csv
+   import_batch --batch-file examples/woo_samples.csv --batch-type csv
    ```
 
 ## Features
