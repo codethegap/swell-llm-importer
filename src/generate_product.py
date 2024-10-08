@@ -40,12 +40,12 @@ def load_schema(schema_path="schema_compiled.json"):
 def load_env_variables():
     """Load environment variables from the .env file."""
     load_dotenv()
-    openai_api_key = os.getenv("OPENAI_API_KEY")
+    openai_api_key = os.getenv("openai_api_key")
     store_id = os.getenv("store-id")
     store_key = os.getenv("store-key")
 
     if not openai_api_key:
-        sys.exit("Error: 'OPENAI_API_KEY' not found in .env file.")
+        sys.exit("Error: 'openai_api_key' not found in .env file.")
 
     return {
         "openai_api_key": openai_api_key,
@@ -157,7 +157,7 @@ def main(args=None):
         args = parse_arguments()  # Default to command-line arguments if none provided
     else:
         pass
-    
+
     env_vars = load_env_variables()
     schema = load_schema()
 
